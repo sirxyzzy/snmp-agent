@@ -6,7 +6,15 @@ use async_std::task;
 use async_std::net::TcpListener;
 use async_std::prelude::*;
 
+use thiserror::Error;
+
 use async_listen::{ListenExt, ByteStream, backpressure, error_hint};
+
+#[derive(Error, Debug)]
+pub enum SnmpAgentError {
+    #[error("whoops, network")]
+    Network(#[from] io::Error),
+}
 
 pub fn run() {
     println!("SNMP Agent running");
@@ -16,7 +24,7 @@ pub fn run() {
 
 }
 
-async fn listen() -> Result<(), io::Error> {
+async fn listen() -> Result<(), SnmpAgentError> {
     let (_, bp) = backpressure::new(10);
     let listener = TcpListener::bind("localhost:8080").await?;
     eprintln!("Accepting connections on localhost:8080");
