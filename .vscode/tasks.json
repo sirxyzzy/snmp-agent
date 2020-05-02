@@ -25,7 +25,10 @@
             "command": "cargo build",
             "problemMatcher": [
                 "$rustc"
-            ]
+            ],
+            "presentation": {
+                "clear": true
+            }
         },
     ]
 }
