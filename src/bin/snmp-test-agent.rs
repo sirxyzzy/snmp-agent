@@ -7,12 +7,13 @@ use std::time::Instant;
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
-/// This doc string acts as a help message when the user runs '--help'
-/// as do all doc strings on fields
+/// This program acts as a self contained SNMP agent on localhost.
+/// It generates dummy data which is suitable for testing an SNMP Manager.
+/// It uses the snmp-agent library
 #[derive(Clap)]
 #[clap(version = VERSION, author = "Andy P. <andy@failfree.net>")]
 struct Opts {
-    /// Sets a custom port, defaults to 1161
+    /// Sets the port to listen on
     #[clap(short = "p", long = "port", default_value = "1161")]
     port: u16,
 }
