@@ -9,7 +9,10 @@
             "command": "cargo run --example ${fileBasenameNoExtension}",
             "problemMatcher": [
                 "$rustc"
-            ]
+            ],
+            "presentation": {
+                "clear": true
+            }
         },
         {
             "label": "cargo run",
@@ -17,7 +20,10 @@
             "command": "cargo run",
             "problemMatcher": [
                 "$rustc"
-            ]
+            ],
+            "presentation": {
+                "clear": true
+            }
         },
         {
             "label": "cargo build",
