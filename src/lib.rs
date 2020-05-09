@@ -6,10 +6,15 @@ use async_std::task;
 use async_std::net::{UdpSocket,SocketAddr};
 use async_std::prelude::*;
 
+use byte_string::ByteStr;
+
+use snmp::SnmpPdu;
+
 use thiserror::Error;
 
 // use async_listen::{ListenExt, ByteStream, backpressure, error_hint};
 
+const MIN_PDU_SIZE: i32 = 484;
 #[derive(Error, Debug)]
 pub enum SnmpAgentError {
     #[error("whoops, network")]
@@ -34,8 +39,18 @@ async fn listen(address: SocketAddr) -> Result<(), SnmpAgentError> {
         let (n, peer) = socket.recv_from(&mut buf).await?;
         println!("Received {} bytes from {}", n, peer);
 
+        let bytes = ByteStr::new(&buf[..n]);
+
+        // Trace bytes in
+        println!("Bytes {:?}", bytes);
+
+        let pdu = SnmpPdu::from_bytes(bytes);
+
+        // Trace PDU
+        println!("Pdu {:?}", pdu);
+
         // simple echo
-        let sent = socket.send_to(&buf[..n], peer).await?;
+        let sent = socket.send_to(bytes, peer).await?;
         println!("Sent {} bytes to {}", sent, peer);
     }
     // Ok(()) 
