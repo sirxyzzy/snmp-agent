@@ -12,4 +12,4 @@ async-std = { version = "1.3", features = ["attributes"] }
 thiserror = "1.0"
 clap = { git = "https://github.com/clap-rs/clap" } # bin , use git to grab 3.0 version
 snmp = { git = "https://github.com/sirxyzzy/rust-snmp" }
-byte_string = "1.0"
+itertools = "0.9.0"
